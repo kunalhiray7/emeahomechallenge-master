@@ -29,19 +29,20 @@ export default function Home() {
     const classes = useStyles();
 
     const [books, setBooks] = useState({});
+    const [error, setError] = useState({});
 
     useEffect(() => {
-        function fetchBooks() {
-            fetch('http://localhost:3000/api/books')
-                .then(res => res.json())
-                .then(booksObj => setBooks(booksObj));
+        const fetchBooks = async () => {
+            const response = await fetch('http://localhost:3000/api/books')
+            const books = await response.json();
+            setBooks(books);
         }
-        fetchBooks();
-    }, );
+        fetchBooks().catch(error => setError(error));
+    }, []);
 
     return (
         <div className={classes.root}>
-            <AppBar position="static">
+            <AppBar id="appBar" position="static">
                 <Toolbar>
                     <IconButton
                         edge="start"
