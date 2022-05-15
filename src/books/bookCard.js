@@ -18,7 +18,7 @@ export function BookCard(props) {
                 const book = books[bookIndex];
 
                 return (
-                    <Card key={book.Title} className={classes.root}>
+                    <Card id={`book_${bookIndex}`} key={book.Title} className={classes.root}>
                         <CardContent>
                             <Typography variant="h5" component="h2">
                                 {book.Title}

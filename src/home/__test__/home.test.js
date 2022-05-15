@@ -9,7 +9,7 @@ import Home from "../home";
 import {BookCard} from "../../books/bookCard";
 
 describe("Home", () => {
-    let wrapper, fetchMock;
+    let wrapper;
     const classes = {root: "root"};
 
     beforeEach(() => {
