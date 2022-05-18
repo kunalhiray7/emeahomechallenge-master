@@ -13,7 +13,7 @@ server.use(cors());
 server.get('/api/ping', (req, res) => res.send('pong'));
 
 server.get('/api/books', async (req, res) => {
-  const jsonBooks = await csv().fromFile('./books.csv');
+  const jsonBooks = await csv({delimiter: ";"}).fromFile('./books_copy.csv');
   res.send(jsonBooks);
 });
 

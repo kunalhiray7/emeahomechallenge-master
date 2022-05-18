@@ -3,9 +3,9 @@ import {shallow} from 'enzyme';
 
 import App from './App';
 import {paths} from './common/constants/constants';
-import Home from "./home/home";
+import AppRoutes from "./home/routes";
 
-describe("App Routes", () => {
+describe("App", () => {
 
     let wrapper;
 
@@ -13,11 +13,11 @@ describe("App Routes", () => {
         wrapper = shallow(<App/>);
     });
 
-    it('should render the route for edit profile', function () {
+    it('should render the base route', function () {
         const routes = wrapper.find('Routes');
         const homeRoute = routes.childAt(0);
 
-        expect(homeRoute.prop("path")).toEqual(paths.HOME);
-        expect(homeRoute.prop("element")).toEqual(<Home/>);
+        expect(homeRoute.prop("path")).toEqual(paths.ALL);
+        expect(homeRoute.prop("element")).toEqual(<AppRoutes/>);
     });
 });
