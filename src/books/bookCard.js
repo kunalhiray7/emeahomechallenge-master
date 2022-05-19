@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
@@ -8,9 +9,14 @@ import {makeStyles} from "@material-ui/core/styles";
 
 export function BookCard(props) {
     const classes = cardStyles();
+    const navigate = useNavigate();
 
-    const { books } = props;
+    const {books} = props;
 
+    const navigateToBookDetails = (e, book) => {
+        e.preventDefault()
+        navigate(`/books/${book.ID}`)
+    }
 
     return (
         <>
@@ -32,7 +38,7 @@ export function BookCard(props) {
                             </Typography>
                         </CardContent>
                         <CardActions>
-                            <Button size="small">Book in detail</Button>
+                            <Button size="small" onClick={(e) => navigateToBookDetails(e, book)}>Book in detail</Button>
                         </CardActions>
                     </Card>
                 );

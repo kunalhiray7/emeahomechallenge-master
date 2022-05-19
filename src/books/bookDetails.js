@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useParams} from 'react-router-dom';
 import {makeStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -6,6 +7,7 @@ import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import {LabelWithValue} from "../common/components/labelWithValue";
+import {fetchBook} from "../api/booksApi";
 
 const sampleBookImage = require("../../static/sample_book.png")
 
@@ -24,14 +26,21 @@ const useStyles = makeStyles((theme) => ({
 export function BookDetails(props) {
     const classes = useStyles();
     const [book, setBook] = useState({
-        ID: "2",
-        Title: "Data Smart",
-        Author: "Foreman, John",
-        Genre: "tech",
-        SubGenre: "data_science",
-        Price: "235",
-        Publisher: "Wiley"
+        ID: "",
+        Title: "",
+        Author: "",
+        Genre: "",
+        SubGenre: "",
+        Price: 0,
+        Publisher: ""
     });
+    const [error, setError] = useState({})
+
+    let {id} = useParams();
+
+    React.useEffect(() => {
+        fetchBook(id).then(setBook).catch(setError);
+    }, [id])
 
     return <>
         <div className={classes.root}>

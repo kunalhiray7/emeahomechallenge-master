@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {BookCard} from "../books/bookCard";
+import {fetchBooks} from "../api/booksApi";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -14,19 +15,14 @@ export default function Home() {
     const [books, setBooks] = useState({});
     const [error, setError] = useState({});
 
-    useEffect(() => {
-        const fetchBooks = async () => {
-            const response = await fetch('http://localhost:3000/api/books')
-            const books = await response.json();
-            setBooks(books);
-        }
-        fetchBooks().catch(error => setError(error));
+    React.useEffect(() => {
+        fetchBooks().then(setBooks).catch(setError);
     }, []);
 
     return (
         <div className={classes.root}>
             <main className={classes.content}>
-                <BookCard books={books} />
+                <BookCard books={books}/>
             </main>
         </div>
     );

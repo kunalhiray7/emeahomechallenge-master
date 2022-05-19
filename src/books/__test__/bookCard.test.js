@@ -5,11 +5,17 @@ import Button from "@material-ui/core/Button";
 import {shallow} from 'enzyme';
 import {BookCard} from "../bookCard";
 
+const mockedUsedNavigate = jest.fn();
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => mockedUsedNavigate,
+}));
 describe("Book Card", () => {
     let wrapper;
     const classes = {root: "root"};
     const books = [
         {
+            ID: 1,
             Title: "Fundamentals of Wavelets",
             Author: "Goswami, Jaideva",
             Genre: "tech",
@@ -18,6 +24,7 @@ describe("Book Card", () => {
             Publisher: "Wiley"
         },
         {
+            ID: 2,
             Title: "Data Smart",
             Author: "Foreman, John",
             Genre: "tech",
@@ -49,6 +56,16 @@ describe("Book Card", () => {
 
         expect(button.type()).toEqual(Button)
         expect(button.text()).toEqual("Book in detail")
+    });
+
+    it("should navigate to book details page when clicked on single book", () => {
+        const card = wrapper.find("#book_1");
+        const cardActions = card.find(CardActions)
+        const button = cardActions.childAt(0);
+
+        button.simulate("click", {preventDefault: jest.fn(), book: books[1]})
+
+        expect(mockedUsedNavigate).toHaveBeenCalledWith(`/books/${books[1].ID}`);
     });
 
 });

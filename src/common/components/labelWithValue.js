@@ -34,7 +34,7 @@ export const LabelWithValue = ({label, value, fieldName}) => {
             <Typography id={`${fieldName}Label`}>{label}</Typography>
         </div>
         <div className={classes.value}>
-            <Typography id={`${fieldName}Value`} variant="h8">{value}</Typography>
+            <Typography id={`${fieldName}Value`} variant="h6">{value}</Typography>
         </div>
     </div>;
 };
