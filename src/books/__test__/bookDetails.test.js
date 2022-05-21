@@ -1,9 +1,12 @@
 import React from "react";
 import {shallow} from "enzyme";
 import Card from "@material-ui/core/Card";
+import Button from "@material-ui/core/Button";
 import {BookDetails} from "../bookDetails";
 import {LabelWithValue} from "../../common/components/labelWithValue";
 import {fetchBook} from "../../api/booksApi";
+import CartService from "../../cart/cartService";
+import {Quantity} from "../../common/components/qunatity";
 
 const book = {
     ID: "2",
@@ -25,6 +28,11 @@ jest.mock("../../api/booksApi", () => {
         fetchBook: jest.fn().mockResolvedValue(book)
     }
 })
+jest.mock("../../cart/cartService", () => {
+    return {
+        addItemToCart: jest.fn()
+    }
+});
 describe("Book Details", () => {
     let wrapper, bookDetailsContainer, paper;
 
@@ -90,5 +98,25 @@ describe("Book Details", () => {
         expect(paper.childAt(5).prop("label")).toEqual("Price")
         expect(paper.childAt(5).prop("value")).toEqual("$0")
         expect(paper.childAt(5).prop("fieldName")).toEqual("price")
+    });
+
+    it("should render the button to add product in the cart", () => {
+        const addToCartButton = wrapper.find("#addToCart")
+
+        expect(addToCartButton.type()).toEqual(Button)
+        expect(addToCartButton.prop("type")).toEqual("primary")
+    });
+
+    it("should add book to the cart when clicked on add to cart button", () => {
+        const addToCartButton = wrapper.find("#addToCart")
+        addToCartButton.simulate("click", {preventDefault: jest.fn()})
+
+        expect(CartService.addItemToCart).toHaveBeenCalled()
+    });
+
+    it("should render the book quantity", () => {
+        const quantity = wrapper.find("#quantity")
+
+        expect(quantity.type()).toEqual(Quantity)
     });
 });

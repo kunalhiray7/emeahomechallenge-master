@@ -8,6 +8,9 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import {LabelWithValue} from "../common/components/labelWithValue";
 import {fetchBook} from "../api/booksApi";
+import Button from "@material-ui/core/Button";
+import CartService from "../cart/cartService";
+import {Quantity} from "../common/components/qunatity";
 
 const sampleBookImage = require("../../static/sample_book.png")
 
@@ -22,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.grey.A100
     }
 }));
-
 export function BookDetails(props) {
     const classes = useStyles();
     const [book, setBook] = useState({
@@ -34,13 +36,19 @@ export function BookDetails(props) {
         Price: 0,
         Publisher: ""
     });
-    const [error, setError] = useState({})
 
+    const [error, setError] = useState({})
+    const [quantity, setQuantity] = useState(0)
     let {id} = useParams();
 
     React.useEffect(() => {
         fetchBook(id).then(setBook).catch(setError);
     }, [id])
+
+    const handleAddToCart = (e) => {
+        e.preventDefault();
+        CartService.addItemToCart({...book, quantity})
+    }
 
     return <>
         <div className={classes.root}>
@@ -62,6 +70,8 @@ export function BookDetails(props) {
                         <LabelWithValue label="Publisher" value={book.Publisher} fieldName="publisher"/>
                         <LabelWithValue label="Price" value={`$${book.Price}`} fieldName="price"/>
                     </Paper>
+                    <Quantity id="quantity" callback={setQuantity}/>
+                    <Button id="addToCart" type="primary" onClick={handleAddToCart}>Add To Cart</Button>
                 </Grid>
             </Grid>
         </div>
