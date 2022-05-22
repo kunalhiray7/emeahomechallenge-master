@@ -29,7 +29,9 @@ const items = [
 
 jest.mock("../cartService", () => {
     return {
-        fetchAllItems: jest.fn().mockReturnValue(items)
+        fetchAllItems: jest.fn().mockReturnValue(items),
+        removeItemFromCart: jest.fn(),
+        totalCartPrice: jest.fn().mockReturnValue(123)
     }
 })
 describe("Cart", () => {
@@ -48,6 +50,18 @@ describe("Cart", () => {
 
         expect(cartItems.at(0).prop("item")).toEqual(items[0])
         expect(cartItems.at(1).prop("item")).toEqual(items[1])
+    });
+
+    it("should call cart service to remove item from cart", () => {
+        const cartItem = wrapper.find(CartItem).at(0)
+        cartItem.prop("removeItemFromCart")(items[0].ID)
+
+        expect(CartService.removeItemFromCart).toHaveBeenCalledWith(items[0].ID)
+        expect(CartService.fetchAllItems).toHaveBeenCalled()
+    });
+
+    it("should fetch total price of the cart", () => {
+        expect(CartService.totalCartPrice).toHaveBeenCalled()
     });
 
 })

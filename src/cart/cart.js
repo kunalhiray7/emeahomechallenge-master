@@ -9,7 +9,9 @@ export const Cart = () => {
 
     const [items, setItems] = useState(CartService.fetchAllItems())
 
-    const removeItemFromCart = () => {
+    const removeItemFromCart = (id) => {
+        CartService.removeItemFromCart(id)
+        setItems(CartService.fetchAllItems())
     }
 
     return <>
@@ -23,6 +25,13 @@ export const Cart = () => {
                         </Fragment>
                     ))}
                 </Container>
+                <Typography
+                    variant='h6'
+                    align='right'
+                    className='animate__animated animate__fadeInUp'
+                >
+                    Total: {'$' + CartService.totalCartPrice().toFixed(2)}
+                </Typography>
             </>
         ) : (<><Typography variant='inherit'>No Items in the cart!!</Typography></>)}
     </>

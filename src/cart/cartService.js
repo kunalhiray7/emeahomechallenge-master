@@ -27,6 +27,16 @@ class CartService {
     }
 
     isInCart = (itemId) => this.cart.some((cartItem) => cartItem.ID === itemId);
+
+    removeItemFromCart = (id) => {
+        this.cart = this.cart.filter((cartItem) => cartItem.ID !== id);
+        localStorage.setItem(
+            'cart',
+            JSON.stringify(this.cart)
+        );
+    };
+
+    totalCartPrice = () => this.cart.reduce((acc, item) => (acc += item.Price * item.quantity), 0);
 }
 
 const instance = CartService.getInstance()

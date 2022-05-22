@@ -72,4 +72,29 @@ describe("Cart Service", () => {
 
         expect(items.find(i => i.ID === item.ID)).toBeDefined()
     });
+
+    it("should remove item from the cart", () => {
+        const item = {
+            ID: "5",
+            Title: "Data Smart",
+            Author: "Foreman, John",
+            Genre: "tech",
+            SubGenre: "data_science",
+            Price: "235",
+            Publisher: "Wiley",
+            quantity: 1
+        }
+        CartService.addItemToCart(item)
+
+        CartService.removeItemFromCart(item.ID)
+        const updatedItems = CartService.fetchAllItems()
+
+        expect(updatedItems.find(i => i.ID === item.ID)).toBeUndefined()
+    });
+
+    it("should return the total price of the cart", () => {
+        const totalPrice = CartService.totalCartPrice()
+
+        expect(totalPrice).toEqual(1175)
+    });
 })
