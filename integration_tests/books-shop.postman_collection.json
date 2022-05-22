@@ -95,6 +95,46 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Fetch book by ID - Not Found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Fetch book by ID - should return 404 when no book found for given ID\", () => {",
+							"    pm.response.to.have.status(404);",
+							"})",
+							"",
+							"pm.test(\"Fetch book by ID - should have correct data\", () => {",
+							"    const responseJson = pm.response.json();",
+							"",
+							"    pm.expect(responseJson.message).to.eql('No book found for ID abcd')",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/books/abcd",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"books",
+						"abcd"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

@@ -30,4 +30,22 @@ describe("Books API", () => {
         expect(fetchedBook).toEqual(books[0])
         expect(fetch).toHaveBeenCalled()
     });
+
+    it("should throw error when fetch failed", async () => {
+        fetch.mockResponseOnce(JSON.stringify({message: "not found"}), {status: 404});
+
+        fetchBooks().catch(error => {
+            expect(error.message).toEqual("Not Found: not found")
+            expect(fetch).toHaveBeenCalled()
+        })
+    });
+
+    it("should throw error when fetch single book failed", async () => {
+        fetch.mockResponseOnce(JSON.stringify({message: "not found"}), {status: 404});
+
+        fetchBook(345).catch(error => {
+            expect(error.message).toEqual("Not Found: not found")
+            expect(fetch).toHaveBeenCalled()
+        })
+    });
 });

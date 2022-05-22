@@ -8,6 +8,8 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 import {LabelWithValue} from "../common/components/labelWithValue";
 import {fetchBook} from "../api/booksApi";
 import CartService from "../cart/cartService";
@@ -48,6 +50,7 @@ export function BookDetails(props) {
 
     const [error, setError] = useState(undefined)
     const [quantity, setQuantity] = useState(0)
+    const [open, setOpen] = React.useState(false);
     let {id} = useParams();
 
     React.useEffect(() => {
@@ -57,7 +60,15 @@ export function BookDetails(props) {
     const handleAddToCart = (e) => {
         e.preventDefault();
         CartService.addItemToCart({...book, quantity})
+        setOpen(true)
     }
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
 
     return <>
 
@@ -87,6 +98,11 @@ export function BookDetails(props) {
                                 onClick={handleAddToCart}><ShoppingCartIcon/> Add To Cart</Button>
                     </Grid>
                 </Grid>
+                <Snackbar id="snackbar" open={open} autoHideDuration={3000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="success">
+                        Book is added in the cart!
+                    </Alert>
+                </Snackbar>
             </div>
         )}
     </>

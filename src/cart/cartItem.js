@@ -14,15 +14,12 @@ const CartItem = ({item, removeItemFromCart}) => {
 
     return (
         <>
-            <Grid container gap>
+            <Grid container>
                 <Grid
                     item
                     xs={12}
                     md={2}
                     display='grid'
-                    textAlign='center'
-                    justifyContent='center'
-                    alignContent='center'
                 >
                     <img id={`image${item.ID}`} src={sampleBookImage} alt={item.ID} height='150' width='150'/>
                 </Grid>
@@ -32,9 +29,6 @@ const CartItem = ({item, removeItemFromCart}) => {
                     xs={12}
                     md={2}
                     display='grid'
-                    textAlign='center'
-                    justifyContent='center'
-                    alignContent='center'
                 >
                     <Typography id="title" variant='inherit'>{item.Title}</Typography>
                 </Grid>
@@ -45,9 +39,6 @@ const CartItem = ({item, removeItemFromCart}) => {
                     sm={3}
                     md={2}
                     display='grid'
-                    textAlign='center'
-                    justifyContent='center'
-                    alignContent='center'
                 >
                     <Box>
                         <FormHelperText>Price </FormHelperText>
@@ -61,9 +52,6 @@ const CartItem = ({item, removeItemFromCart}) => {
                     sm={3}
                     md={2}
                     display='grid'
-                    textAlign='center'
-                    justifyContent='center'
-                    alignContent='center'
                 >
                     <FormHelperText>Quantity </FormHelperText>
                     <Typography id="quantity" variant='inherit'>{item.quantity}</Typography>
@@ -75,9 +63,6 @@ const CartItem = ({item, removeItemFromCart}) => {
                     sm={3}
                     md={2}
                     display='grid'
-                    textAlign='center'
-                    justifyContent='center'
-                    alignContent='center'
                 >
                     <FormHelperText>Subtotal </FormHelperText>
                     <Typography id="subtotal" variant='inherit'>
@@ -91,9 +76,6 @@ const CartItem = ({item, removeItemFromCart}) => {
                     sm={2}
                     md={1}
                     display='grid'
-                    textAlign='center'
-                    justifyContent='center'
-                    alignContent='center'
                 >
                     <Tooltip title='Delete' placement='top'>
                         <IconButton id="deleteBtn" onClick={handleRemoveItem}>

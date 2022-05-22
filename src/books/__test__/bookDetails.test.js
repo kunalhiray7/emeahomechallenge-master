@@ -119,4 +119,14 @@ describe("Book Details", () => {
 
         expect(quantity.type()).toEqual(Quantity)
     });
+
+    it("should render snackbar message when book is added to the cart", () => {
+        const addToCartButton = wrapper.find("#addToCart")
+        addToCartButton.simulate("click", {preventDefault: jest.fn()})
+
+        const snackbar = wrapper.find("#snackbar")
+
+        expect(snackbar.childAt(0).text()).toEqual("Book is added in the cart!")
+        expect(snackbar.childAt(0).prop("severity")).toEqual("success")
+    });
 });

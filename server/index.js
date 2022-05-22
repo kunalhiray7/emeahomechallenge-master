@@ -27,6 +27,9 @@ server.get('/api/books/:id', async (req, res) => {
   }
   const id = req.params.id
   const singleBook = jsonBooks.find(book => book.ID === id)
+  if(singleBook === undefined) {
+    res.status(404).send({message: `No book found for ID ${id}`})
+  }
   res.send(singleBook);
 });
 
