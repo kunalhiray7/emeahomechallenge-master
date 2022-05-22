@@ -37,6 +37,11 @@ class CartService {
     };
 
     totalCartPrice = () => this.cart.reduce((acc, item) => (acc += item.Price * item.quantity), 0);
+
+    clear = () => {
+        this.cart = [];
+        localStorage.setItem('cart', JSON.stringify(this.cart));
+    };
 }
 
 const instance = CartService.getInstance()

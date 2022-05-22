@@ -97,4 +97,10 @@ describe("Cart Service", () => {
 
         expect(totalPrice).toEqual(1175)
     });
+
+    it("should clear the items in the cart", () => {
+        CartService.clear()
+        const updatedItems = CartService.fetchAllItems()
+        expect(updatedItems.length).toEqual(0)
+    });
 })
