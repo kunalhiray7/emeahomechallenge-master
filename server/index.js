@@ -12,9 +12,22 @@ server.use(cors());
 // healthcheck API
 server.get('/api/ping', (req, res) => res.send('pong'));
 
+let jsonBooks;
+
 server.get('/api/books', async (req, res) => {
-  const jsonBooks = await csv({delimiter: ";"}).fromFile('./books_copy.csv');
+  if(!jsonBooks) {
+    jsonBooks = await csv({delimiter: ";"}).fromFile('./books_copy.csv');
+  }
   res.send(jsonBooks);
+});
+
+server.get('/api/books/:id', async (req, res) => {
+  if(!jsonBooks) {
+    jsonBooks = await csv({delimiter: ";"}).fromFile('./books_copy.csv');
+  }
+  const id = req.params.id
+  const singleBook = jsonBooks.find(book => book.ID === id)
+  res.send(singleBook);
 });
 
 //set port and log to the console

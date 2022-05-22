@@ -83,3 +83,8 @@ A CSV file is loaded into memory and serves as the data backend for the books AP
 Feel free to change anything that is already implemented, e.g. better directory and component structure. You should fix any bugs or anything that can hurt backend and frontend performance.
 
 # 6. Be prepared to do a pair review of the delivered codebase
+
+# 7. Integration Tests
+* The integration tests are implemented using [newman](https://github.com/postmanlabs/newman).
+* You can install newman globally by executing `npm install -g newman`
+* Navigate to `integration_tests` directory and execute `./integration-tests.sh`. The result of the integration tests will printed on the console.
