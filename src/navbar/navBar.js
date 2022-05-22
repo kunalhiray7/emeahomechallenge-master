@@ -8,6 +8,8 @@ import AppBar from "@material-ui/core/AppBar";
 import {makeStyles} from "@material-ui/core/styles";
 import {useNavigate} from "react-router-dom";
 import {paths} from "../common/constants/constants";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -30,11 +32,24 @@ const useStyles = makeStyles(theme => ({
 export default function NavBar() {
     const classes = useStyles();
     const navigate = useNavigate();
+    const [anchorEl, setAnchorEl] = React.useState(null);
 
     const navigateToCart = (e) => {
         e.preventDefault()
         navigate(paths.CART)
     }
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const navigateToHome = () => {
+        navigate(paths.HOME)
+    }
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
 
     return <div className={classes.root}>
         <AppBar id="appBar" position="static">
@@ -44,9 +59,20 @@ export default function NavBar() {
                     className={classes.menuButton}
                     color="inherit"
                     aria-label="menu"
+                    onClick={handleClick}
                 >
                     <MenuIcon/>
                 </IconButton>
+                <Menu
+                    id="bookShopMenu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                >
+                    <MenuItem onClick={navigateToHome}>Home</MenuItem>
+                    <MenuItem onClick={navigateToCart}>Cart</MenuItem>
+                </Menu>
                 <Typography variant="h6" className={classes.title}>
                     Book Shop
                 </Typography>
