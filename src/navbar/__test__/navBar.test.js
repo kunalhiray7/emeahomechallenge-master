@@ -6,7 +6,14 @@ import Button from "@material-ui/core/Button";
 import {shallow} from "enzyme";
 import React from "react";
 import NavBar from "../navBar";
+import {paths} from "../../common/constants/constants";
 
+
+const mockedUsedNavigate = jest.fn();
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => mockedUsedNavigate,
+}));
 describe("Nav Bar", () => {
     let wrapper;
     const classes = {root: "root"};
@@ -43,5 +50,14 @@ describe("Nav Bar", () => {
         const cartButton = appBar.find(Button)
 
         expect(cartButton.text()).toEqual("Cart")
+    });
+
+    it("should navigate to cart page when clicked on cart button", () => {
+        const appBar = wrapper.find("#appBar");
+        const cartButton = appBar.find(Button)
+
+        cartButton.simulate("click", {preventDefault: jest.fn()})
+
+        expect(mockedUsedNavigate).toHaveBeenCalledWith(paths.CART);
     });
 });

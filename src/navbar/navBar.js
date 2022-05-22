@@ -6,6 +6,8 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
 import {makeStyles} from "@material-ui/core/styles";
+import {useNavigate} from "react-router-dom";
+import {paths} from "../common/constants/constants";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -27,6 +29,12 @@ const useStyles = makeStyles(theme => ({
 
 export default function NavBar() {
     const classes = useStyles();
+    const navigate = useNavigate();
+
+    const navigateToCart = (e) => {
+        e.preventDefault()
+        navigate(paths.CART)
+    }
 
     return <div className={classes.root}>
         <AppBar id="appBar" position="static">
@@ -42,7 +50,7 @@ export default function NavBar() {
                 <Typography variant="h6" className={classes.title}>
                     Book Shop
                 </Typography>
-                <Button color="inherit">Cart</Button>
+                <Button onClick={navigateToCart} color="inherit">Cart</Button>
             </Toolbar>
         </AppBar>
     </div>

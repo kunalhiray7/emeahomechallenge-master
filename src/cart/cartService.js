@@ -22,6 +22,10 @@ class CartService {
         localStorage.setItem('cart', JSON.stringify(this.cart));
     };
 
+    fetchAllItems = () => {
+        return JSON.parse(localStorage.getItem('cart')) || []
+    }
+
     isInCart = (itemId) => this.cart.some((cartItem) => cartItem.ID === itemId);
 }
 

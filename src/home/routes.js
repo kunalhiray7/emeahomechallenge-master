@@ -5,6 +5,7 @@ import NavBar from "../navbar/navBar";
 import {paths} from "../common/constants/constants";
 import Home from "./home";
 import {BookDetails} from "../books/bookDetails";
+import {Cart} from "../cart/cart";
 
 
 const AppRoutes = () => (
@@ -14,6 +15,7 @@ const AppRoutes = () => (
             <Routes>
                 <Route exact path={paths.HOME} element={<Home/>}/>
                 <Route exact path={paths.BOOK_DETAILS} element={<BookDetails/>}/>
+                <Route exact path={paths.CART} element={<Cart/>}/>
             </Routes>
         </Container>
     </>

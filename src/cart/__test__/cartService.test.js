@@ -54,4 +54,22 @@ describe("Cart Service", () => {
         const updatedCart = JSON.parse(localStorage.getItem("cart"))
         expect(updatedCart[0].quantity).toBeGreaterThan(1)
     });
+
+    it("should fetch all items from local storage", () => {
+        const item = {
+            ID: "4",
+            Title: "Data Smart",
+            Author: "Foreman, John",
+            Genre: "tech",
+            SubGenre: "data_science",
+            Price: "235",
+            Publisher: "Wiley",
+            quantity: 1
+        }
+
+        CartService.addItemToCart(item)
+        const items = CartService.fetchAllItems()
+
+        expect(items.find(i => i.ID === item.ID)).toBeDefined()
+    });
 })
