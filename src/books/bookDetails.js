@@ -12,6 +12,7 @@ import {LabelWithValue} from "../common/components/labelWithValue";
 import {fetchBook} from "../api/booksApi";
 import CartService from "../cart/cartService";
 import {Quantity} from "../common/components/qunatity";
+import {Error} from "../common/components/error";
 
 const sampleBookImage = require("../../static/sample_book.png")
 
@@ -45,7 +46,7 @@ export function BookDetails(props) {
         Publisher: ""
     });
 
-    const [error, setError] = useState({})
+    const [error, setError] = useState(undefined)
     const [quantity, setQuantity] = useState(0)
     let {id} = useParams();
 
@@ -59,30 +60,34 @@ export function BookDetails(props) {
     }
 
     return <>
-        <div className={classes.root}>
-            <Grid container spacing={3}>
-                <Grid item xs={4}>
-                    <Paper className={classes.paper}>
-                        <Card raised>
-                            <CardMedia component='img' image={sampleBookImage} alt={123}/>
-                        </Card>
-                    </Paper>
+
+        {error ? (<Error id="error" message={`Error while fetching book details! - ${error.message}`}/>)
+            : (
+            <div className={classes.root}>
+                <Grid container spacing={3}>
+                    <Grid item xs={4}>
+                        <Paper className={classes.paper}>
+                            <Card raised>
+                                <CardMedia component='img' image={sampleBookImage} alt={123}/>
+                            </Card>
+                        </Paper>
+                    </Grid>
+                    <Grid id="bookDetails" item xs={8}>
+                        <Typography variant="h4">{book.Title} by {book.Author}</Typography>
+                        <Paper className={classes.paper}>
+                            <LabelWithValue label="Title" value={book.Title} fieldName="title"/>
+                            <LabelWithValue label="Author" value={book.Author} fieldName="author"/>
+                            <LabelWithValue label="Genre" value={book.Genre} fieldName="genre"/>
+                            <LabelWithValue label="SubGenre" value={book.SubGenre} fieldName="subgenre"/>
+                            <LabelWithValue label="Publisher" value={book.Publisher} fieldName="publisher"/>
+                            <LabelWithValue label="Price" value={`$${book.Price}`} fieldName="price"/>
+                        </Paper>
+                        <Quantity id="quantity" callback={setQuantity}/>
+                        <Button className={classes.addToCartBtn} id="addToCart" type="primary"
+                                onClick={handleAddToCart}><ShoppingCartIcon/> Add To Cart</Button>
+                    </Grid>
                 </Grid>
-                <Grid id="bookDetails" item xs={8}>
-                    <Typography variant="h4">{book.Title} by {book.Author}</Typography>
-                    <Paper className={classes.paper}>
-                        <LabelWithValue label="Title" value={book.Title} fieldName="title"/>
-                        <LabelWithValue label="Author" value={book.Author} fieldName="author"/>
-                        <LabelWithValue label="Genre" value={book.Genre} fieldName="genre"/>
-                        <LabelWithValue label="SubGenre" value={book.SubGenre} fieldName="subgenre"/>
-                        <LabelWithValue label="Publisher" value={book.Publisher} fieldName="publisher"/>
-                        <LabelWithValue label="Price" value={`$${book.Price}`} fieldName="price"/>
-                    </Paper>
-                    <Quantity id="quantity" callback={setQuantity}/>
-                    <Button className={classes.addToCartBtn} id="addToCart" type="primary"
-                            onClick={handleAddToCart}><ShoppingCartIcon/> Add To Cart</Button>
-                </Grid>
-            </Grid>
-        </div>
+            </div>
+        )}
     </>
 }
