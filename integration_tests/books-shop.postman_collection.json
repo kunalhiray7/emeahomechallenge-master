@@ -1,0 +1,100 @@
+{
+	"info": {
+		"_postman_id": "9eb4a699-0158-43dc-93e2-64b33eca3599",
+		"name": "books-shop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Fetch All Books",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Fetch all books - should return 200 on success\", () => {",
+							"    pm.response.to.have.status(200);",
+							"})",
+							"",
+							"pm.test(\"Fetch all books - should have correct repsonse structure\", () => {",
+							"    const responseJson = pm.response.json();",
+							"",
+							"    pm.expect(responseJson[0].ID).to.be.a('string')",
+							"    pm.expect(responseJson[0].Title).to.be.a('string')",
+							"    pm.expect(responseJson[0].Author).to.be.a('string')",
+							"    pm.expect(responseJson[0].Genre).to.be.a('string')",
+							"    pm.expect(responseJson[0].SubGenre).to.be.a('string')",
+							"    pm.expect(responseJson[0].Price).to.be.a('string')",
+							"    pm.expect(responseJson[0].Publisher).to.be.a('string')",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fetch book by ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Fetch book by ID - should return 200 on success\", () => {",
+							"    pm.response.to.have.status(200);",
+							"})",
+							"",
+							"pm.test(\"Fetch book by ID - should have correct data\", () => {",
+							"    const responseJson = pm.response.json();",
+							"",
+							"    pm.expect(responseJson.ID).to.eql('1')",
+							"    pm.expect(responseJson.Title).to.eql('Fundamentals of Wavelets')",
+							"    pm.expect(responseJson.Author).to.eql('Goswami, Jaideva')",
+							"    pm.expect(responseJson.Genre).to.eql('tech')",
+							"    pm.expect(responseJson.SubGenre).to.eql('signal_processing')",
+							"    pm.expect(responseJson.Price).to.eql('228')",
+							"    pm.expect(responseJson.Publisher).to.eql('Wiley')",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/books/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"books",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
