@@ -6,9 +6,10 @@ import Grid from '@material-ui/core/Grid';
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import Button from "@material-ui/core/Button";
 import {LabelWithValue} from "../common/components/labelWithValue";
 import {fetchBook} from "../api/booksApi";
-import Button from "@material-ui/core/Button";
 import CartService from "../cart/cartService";
 import {Quantity} from "../common/components/qunatity";
 
@@ -23,8 +24,15 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
         color: theme.palette.text.secondary,
         backgroundColor: theme.palette.grey.A100
+    },
+    addToCartBtn: {
+        marginBottom: theme.spacing(2),
+        marginTop: theme.spacing(2),
+        backgroundColor: "#3f51b5",
+        color: "White"
     }
 }));
+
 export function BookDetails(props) {
     const classes = useStyles();
     const [book, setBook] = useState({
@@ -71,7 +79,8 @@ export function BookDetails(props) {
                         <LabelWithValue label="Price" value={`$${book.Price}`} fieldName="price"/>
                     </Paper>
                     <Quantity id="quantity" callback={setQuantity}/>
-                    <Button id="addToCart" type="primary" onClick={handleAddToCart}>Add To Cart</Button>
+                    <Button className={classes.addToCartBtn} id="addToCart" type="primary"
+                            onClick={handleAddToCart}><ShoppingCartIcon/> Add To Cart</Button>
                 </Grid>
             </Grid>
         </div>

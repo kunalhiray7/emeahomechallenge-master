@@ -1,8 +1,7 @@
 import AppBar from "@material-ui/core/AppBar";
-import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import {shallow} from "enzyme";
@@ -31,9 +30,9 @@ describe("Nav Bar", () => {
     });
 
     it("appBar should have menu", () => {
-        const appBar = wrapper.find("#appBar");
+        const menuBtn = wrapper.find("#menuBtn");
 
-        const menu = appBar.find(IconButton).childAt(0)
+        const menu = menuBtn.childAt(0)
 
         expect(menu.type()).toEqual(MenuIcon)
     });
@@ -47,16 +46,13 @@ describe("Nav Bar", () => {
     });
 
     it("appBar should have Cart button", () => {
-        const appBar = wrapper.find("#appBar");
+        const cartButton = wrapper.find("#cartBtn");
 
-        const cartButton = appBar.find(Button)
-
-        expect(cartButton.text()).toEqual("Cart")
+        expect(cartButton.childAt(0).type()).toEqual(ShoppingCartIcon)
     });
 
     it("should navigate to cart page when clicked on cart button", () => {
-        const appBar = wrapper.find("#appBar");
-        const cartButton = appBar.find(Button)
+        const cartButton = wrapper.find("#cartBtn");
 
         cartButton.simulate("click", {preventDefault: jest.fn()})
 
